@@ -17,8 +17,8 @@ public class FileUtil {
 
 
 	private static ConcurrentHashMap<Long, List<KeyValuePair>> patternMap = new ConcurrentHashMap<>();
-	private static String INPUT_FILE_PATH = "\\Algorithms\\src\\main\\resources\\binary_stream_input.txt";
-	private static String PATTERN_FILE_PATH = "\\Algorithms\\src\\main\\resources\\binary_stream_pattern.json";
+	private static String INPUT_FILE_PATH = "\\resources\\binary_stream_input.txt";
+	private static String PATTERN_FILE_PATH = "\\resources\\binary_stream_pattern.json";
 	private static String input = "";
 	private static String patternStr = "";
 	
