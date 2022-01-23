@@ -13,12 +13,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class FileUtil {
+public class PatternManager {
 
 
-	private static ConcurrentHashMap<Long, List<KeyValuePair>> patternMap = new ConcurrentHashMap<>();
-	private static String INPUT_FILE_PATH = "\\resources\\binary_stream_input.txt";
-	private static String PATTERN_FILE_PATH = "\\resources\\binary_stream_pattern.json";
+	private static ConcurrentHashMap<Integer, List<KeyValuePair>> patternMap = new ConcurrentHashMap<>();
+	private static String INPUT_FILE_PATH = "D:\\my_projects\\Algorithms\\src\\main\\resources\\binary_stream_input.txt";
+	private static String PATTERN_FILE_PATH = "D:\\my_projects\\Algorithms\\src\\main\\resources\\binary_stream_pattern.json";
 	private static String input = "";
 	private static String patternStr = "";
 	
@@ -33,10 +33,10 @@ public class FileUtil {
 				Set<String> keySet = kvPair.keySet();
 				for(String key: keySet) {
 					if(!patternMap.containsKey((long)key.length())) {
-						patternMap.put((long) key.length(), new LinkedList<>());
+						patternMap.put(key.length(), new LinkedList<>());
 					}
 					KeyValuePair pair = new KeyValuePair(key, (String) kvPair.get(key));
-					patternMap.get((long) key.length()).add(pair);
+					patternMap.get(key.length()).add(pair);
 				}
 			}
 			System.out.println("patterns available:: \n" + patternMap);
@@ -72,17 +72,17 @@ public class FileUtil {
 		}
 	}
 
-	public static ConcurrentHashMap<Long, List<KeyValuePair>> getPatternMap() {
-		return patternMap;
+	public static List<KeyValuePair> getPatternMap(int key) {
+		return patternMap.get(key);
 	}
 	
-	public static String getInput() {
-		return input;
+	public char [] getInput() {
+		return input.toCharArray();
 	}
 
-	public static Long getMaxSize() {
-		Set<Long> keySet = patternMap.keySet();
-		List<Long> list = new ArrayList<>(keySet);
+	public Integer getMaxSize() {
+		Set<Integer> keySet = patternMap.keySet();
+		List<Integer> list = new ArrayList<>(keySet);
 		Collections.sort(list);
 		return list.get(list.size()-1);
 	}
