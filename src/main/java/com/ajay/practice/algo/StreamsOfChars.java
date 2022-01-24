@@ -1,5 +1,6 @@
 package com.ajay.practice.algo;
 
+import java.util.Collections;
 import java.util.List;
 
 /*
@@ -21,7 +22,7 @@ public class StreamsOfChars extends PatternManager {
 	public static void main(String [] args) {
 		StreamsOfChars soc = new StreamsOfChars();
 		String output = soc.traverse();
-		System.out.println(output);
+		System.out.println("output :: \n" + output);
 	}
 
 	private String traverse() {
@@ -30,14 +31,19 @@ public class StreamsOfChars extends PatternManager {
 		int sI = 0;
 		int eI = maxPatternKey-1;
 		char [] inputArr = getInput();
-		for(int i=sI; i<inputArr.length; i++) {
-			char[] sub = new char[getMaxSize()];
-			for (int j = 0; j < getMaxSize(); j++) {
-				sub[j] = inputArr[j+i];
+		System.out.println("input length :: \n" + inputArr.length);
+		try {
+			for (int i = sI; i < inputArr.length; i++) {
+				char[] sub = new char[getMaxSize()];
+				for (int j = 0; j < getMaxSize(); j++) {
+					sub[j] = inputArr[j + i];
+				}
+				out.append(iterate(sub, sI, eI));
+				if (eI < inputArr.length - 1)
+					eI++;
 			}
-			out.append(iterate(sub, sI, eI));
-			if(eI<inputArr.length-1)
-				eI++;
+		} catch(Exception e) {
+			return out.toString();
 		}
 		return out.toString();
 	}
@@ -45,7 +51,7 @@ public class StreamsOfChars extends PatternManager {
 	private String iterate(char [] sub, int sI, int eI) {
 		String match = "";
 		for(int i=sub.length; i>=0; i--) {
-			String str = new String(sub, 0, i-1);
+			String str = new String(sub, 0, i);
 			match = search(str);
 			if(!"".equals(match)) {
 				break;
@@ -58,10 +64,12 @@ public class StreamsOfChars extends PatternManager {
 		String match = "";
 		int size = str.length();
 		List <KeyValuePair> kvPairList= getPatternMap(size);
-		for(KeyValuePair kvPair: kvPairList) {
-			if(kvPair.getKey().equals(str)) {
-				match = kvPair.getValue();
-				break;
+		if(kvPairList!=null) {
+			for (KeyValuePair kvPair : kvPairList) {
+				if (kvPair.getKey().equals(str)) {
+					match = kvPair.getValue();
+					break;
+				}
 			}
 		}
 		return match;
