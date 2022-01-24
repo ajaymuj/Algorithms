@@ -1,5 +1,6 @@
 package com.ajay.practice.algo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,12 +31,16 @@ public class StreamsOfChars extends PatternManager {
 		int maxPatternKey = getMaxSize();
 		int sI = 0;
 		int eI = maxPatternKey-1;
-		char [] inputArr = getInput();
+//		char [] inputArr = getInput();
+		char [] inputArr = "10010110".toCharArray();
+		if(inputArr.length<maxPatternKey) {
+			eI=inputArr.length;
+		}
 		System.out.println("input length :: \n" + inputArr.length);
 		try {
-			for (int i = sI; i < inputArr.length; i++) {
-				char[] sub = new char[getMaxSize()];
-				for (int j = 0; j < getMaxSize(); j++) {
+			for (int i = sI; i < (inputArr.length<maxPatternKey?inputArr.length:maxPatternKey); i++) {
+				char[] sub = new char[inputArr.length<maxPatternKey?inputArr.length:maxPatternKey];
+				for (int j = 0; j < (inputArr.length<maxPatternKey?inputArr.length:maxPatternKey); j++) {
 					sub[j] = inputArr[j + i];
 				}
 				out.append(iterate(sub, sI, eI));
@@ -63,7 +68,10 @@ public class StreamsOfChars extends PatternManager {
 	private String search(String str) {
 		String match = "";
 		int size = str.length();
-		List <KeyValuePair> kvPairList= getPatternMap(size);
+		List<KeyValuePair> kvPairList = new ArrayList <>();
+		kvPairList.add(new KeyValuePair("1001","10"));
+		kvPairList.add(new KeyValuePair("0110","1"));
+//		List <KeyValuePair> kvPairList= getPatternMap(size);
 		if(kvPairList!=null) {
 			for (KeyValuePair kvPair : kvPairList) {
 				if (kvPair.getKey().equals(str)) {
