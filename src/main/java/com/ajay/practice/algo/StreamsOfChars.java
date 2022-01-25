@@ -31,21 +31,35 @@ public class StreamsOfChars extends PatternManager {
 		int maxPatternKey = getMaxSize();
 		int sI = 0;
 		int eI = maxPatternKey-1;
-//		char [] inputArr = getInput();
-		char [] inputArr = "10010110".toCharArray();
+		char [] inputArr = getInput();
+//		char [] inputArr = "1001011001101001".toCharArray();
 		if(inputArr.length<maxPatternKey) {
 			eI=inputArr.length;
 		}
 		System.out.println("input length :: \n" + inputArr.length);
 		try {
-			for (int i = sI; i < (inputArr.length<maxPatternKey?inputArr.length:maxPatternKey); i++) {
-				char[] sub = new char[inputArr.length<maxPatternKey?inputArr.length:maxPatternKey];
-				for (int j = 0; j < (inputArr.length<maxPatternKey?inputArr.length:maxPatternKey); j++) {
+			int i =sI;
+			while (i < inputArr.length) {
+				char[] sub = new char[((inputArr.length-i)<maxPatternKey?(inputArr.length-i):maxPatternKey)];
+				for (int j = 0; j < sub.length; j++) {
 					sub[j] = inputArr[j + i];
 				}
-				out.append(iterate(sub, sI, eI));
-				if (eI < inputArr.length - 1)
-					eI++;
+				KeyValuePair match = iterate(sub, sI, eI);
+				if(match!=null) {
+					out.append(match.getValue());
+					i = i + match.getKey().length();
+					if (eI < inputArr.length - 1) {
+						eI = (eI + match.getKey().length())>(inputArr.length - 1)
+								?(inputArr.length - 1):(eI + match.getKey().length());
+					}
+				} else {
+					i++;
+					if(eI < inputArr.length - 1) {
+						eI++;
+					} else {
+						eI = inputArr.length - 1;
+					}
+				}
 			}
 		} catch(Exception e) {
 			return out.toString();
@@ -53,32 +67,36 @@ public class StreamsOfChars extends PatternManager {
 		return out.toString();
 	}
 
-	private String iterate(char [] sub, int sI, int eI) {
-		String match = "";
+	private KeyValuePair iterate(char [] sub, int sI, int eI) {
+		KeyValuePair match = null;
 		for(int i=sub.length; i>=0; i--) {
 			String str = new String(sub, 0, i);
 			match = search(str);
-			if(!"".equals(match)) {
+			if(match!=null) {
 				break;
 			}
 		}
 		return match;
 	}
 
-	private String search(String str) {
-		String match = "";
-		int size = str.length();
-		List<KeyValuePair> kvPairList = new ArrayList <>();
-		kvPairList.add(new KeyValuePair("1001","10"));
-		kvPairList.add(new KeyValuePair("0110","1"));
-//		List <KeyValuePair> kvPairList= getPatternMap(size);
-		if(kvPairList!=null) {
-			for (KeyValuePair kvPair : kvPairList) {
-				if (kvPair.getKey().equals(str)) {
-					match = kvPair.getValue();
-					break;
+	private KeyValuePair search(String str) {
+		KeyValuePair match = null;
+		try {
+			int size = str.length();
+//		List<KeyValuePair> kvPairList = new ArrayList <>();
+//		kvPairList.add(new KeyValuePair("1001","10"));
+//		kvPairList.add(new KeyValuePair("0110","1"));
+			List < KeyValuePair > kvPairList = getPatternMap(size);
+			if (kvPairList != null) {
+				for (KeyValuePair kvPair : kvPairList) {
+					if (kvPair.getKey().equals(str)) {
+						match = kvPair;
+						break;
+					}
 				}
 			}
+		} catch(Exception e) {
+
 		}
 		return match;
 	}

@@ -32,7 +32,7 @@ public class PatternManager {
 			for(LinkedHashMap kvPair : keyValueList) {
 				Set<String> keySet = kvPair.keySet();
 				for(String key: keySet) {
-					if(!patternMap.containsKey((long)key.length())) {
+					if(!patternMap.containsKey(key.length())) {
 						patternMap.put(key.length(), new LinkedList<>());
 					}
 					KeyValuePair pair = new KeyValuePair(key, (String) kvPair.get(key));
