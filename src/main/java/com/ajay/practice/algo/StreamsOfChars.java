@@ -1,7 +1,5 @@
 package com.ajay.practice.algo;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /*
@@ -32,7 +30,6 @@ public class StreamsOfChars extends PatternManager {
 		int sI = 0;
 		int eI = maxPatternKey-1;
 		char [] inputArr = getInput();
-//		char [] inputArr = "1001011001101001".toCharArray();
 		if(inputArr.length<maxPatternKey) {
 			eI=inputArr.length;
 		}
@@ -83,9 +80,6 @@ public class StreamsOfChars extends PatternManager {
 		KeyValuePair match = null;
 		try {
 			int size = str.length();
-//		List<KeyValuePair> kvPairList = new ArrayList <>();
-//		kvPairList.add(new KeyValuePair("1001","10"));
-//		kvPairList.add(new KeyValuePair("0110","1"));
 			List < KeyValuePair > kvPairList = getPatternMap(size);
 			if (kvPairList != null) {
 				for (KeyValuePair kvPair : kvPairList) {
