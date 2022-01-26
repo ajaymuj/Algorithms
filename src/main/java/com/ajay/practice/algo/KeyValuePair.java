@@ -35,6 +35,14 @@ public class KeyValuePair {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		KeyValuePair that = (KeyValuePair) o;
+		return key.equals(that.key);
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(key);
 	}
